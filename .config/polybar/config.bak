@@ -1,0 +1,371 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+
+[colors]
+background = #00FFFFFF
+foreground = #FFFFFF
+
+primary = #d70087
+secondary = #bcbcbc
+third = #878787
+
+null=#00FFFFFF
+blur10 = #1AFFFFFF
+blur30 = #4DFFFFFF
+blur01 = #1A000000
+blur03 = #4D000000
+
+fg-applet = ${self.foreground}
+bg-applet = ${self.null}
+
+fg-active = ${self.foreground}
+bg-active = ${self.blur30}
+fg-inactive = ${self.foreground}
+bg-inactive = ${self.blur10}
+
+fg-powermenu = ${self.foreground}
+bg-powermenu = ${self.null}
+
+[fonts]
+;text
+font-0 = CodeNewRoman Nerd Font:style=Bold:pixelsize=12:antialias=true;3
+font-1 = CodeNewRoman Nerd Font:style=Bold:pixelsize=12:antialias=true;3
+;icons
+font-2 = CodeNewRoman Nerd Font:style=Regular:pixelsize=14:antialias=true;4
+;dock
+font-3 = CodeNewRoman NF:style=Regular:pixelsize=38:antialias=true;10
+
+;=======================================================================
+;                               BARs
+;=======================================================================
+
+[bar/plunne-top]
+monitor=DVI-D-0
+width = 99%
+height = 34
+offset-x = 10
+offset-y = 6
+radius = 13
+padding-left = 0
+padding-right = 0
+background = ${colors.bg-applet}
+foreground = ${colors.fg-applet}
+font-0 = ${fonts.font-0}
+font-1 = ${fonts.font-1}
+font-2 = ${fonts.font-2}
+module-margin = 0
+line-size = 0
+line-color = #f00
+cursor-click = pointer
+cursor-scroll = ns-resize
+modules-left = launcher xwindow
+modules-center = date
+modules-right = wlan eth memory alsa battery sep powermenu
+
+[bar/plunne-dock]
+monitor=DVI-D-0
+bottom=true
+width = 405
+height = 42
+offset-x = 758 
+offset-y = 6
+radius = 13
+padding-left = 0
+padding-right = 0
+background = ${colors.bg-inactive}
+foreground = ${colors.fg-inactive}
+font-0 = ${fonts.font-0}
+font-1 = ${fonts.font-1}
+font-2 = ${fonts.font-2}
+font-3 = ${fonts.font-3}
+module-margin = 0
+line-size = 0
+line-color = #f00
+cursor-click = pointer
+cursor-scroll = ns-resize
+modules-center = bspwm
+
+[bar/plunne2-top]
+monitor=HDMI-A-0
+width = 99%
+height = 34
+offset-x = 10
+offset-y = 6
+radius = 13
+padding-left = 0
+padding-right = 0
+background = ${colors.bg-applet}
+foreground = ${colors.fg-applet}
+font-0 = ${fonts.font-0}
+font-1 = ${fonts.font-1}
+font-2 = ${fonts.font-2}
+module-margin = 0
+line-size = 0
+line-color = #f00
+cursor-click = pointer
+cursor-scroll = ns-resize
+modules-left = launcher xwindow
+modules-center = date
+modules-right = wlan eth memory alsa battery sep powermenu
+
+[bar/plunne2-dock]
+monitor=HDMI-A-0
+bottom=true
+width = 405
+height = 42
+offset-x = 758 
+offset-y = 6
+radius = 13
+padding-left = 0
+padding-right = 0
+background = ${colors.bg-inactive}
+foreground = ${colors.fg-inactive}
+font-0 = ${fonts.font-0}
+font-1 = ${fonts.font-1}
+font-2 = ${fonts.font-2}
+font-3 = ${fonts.font-3}
+module-margin = 0
+line-size = 0
+line-color = #f00
+cursor-click = pointer
+cursor-scroll = ns-resize
+modules-center = bspwm
+
+
+;=======================================================================;
+;                               LEFT MODULES                            ;
+;=======================================================================;
+
+[module/sep]
+type = custom/text
+content = " "
+
+[module/launcher]
+type = custom/text
+content = "  "
+content-font = 3
+click-left = rofi -no-lazy-grab -show drun -modi drun -theme launcher/launchpad
+
+[module/xwindow]
+type = internal/xwindow
+label = " %title:0:40:_% "
+format = <label>
+format-font = 2
+format-background = ${colors.bg-applet}
+format-foreground = ${colors.fg-applet}
+
+;=======================================================================;
+;                               CENTER MODULES                          ;
+;=======================================================================;
+
+[module/bspwm]
+type = internal/bspwm
+format = <label-mode><label-state>
+pin-workspaces = true
+; focused
+label-focused = " %name% "
+label-focused-foreground = ${colors.fg-active}
+label-focused-background = ${colors.bg-active}
+label-focused-font = 4
+; occupied
+label-occupied = " %name% "
+label-occupied-foreground = ${colors.fg-inactive}
+label-occupied-font = 4
+; urgent
+label-urgent = " %name% "
+label-urgent-foreground = ${colors.primary}
+label-urgent-font = 4
+; empty
+label-empty = " %name% "
+label-empty-foreground = ${colors.fg-inactive}
+label-empty-font = 4
+
+[module/date]
+type = internal/date
+interval = 1
+radius = 10px
+; date
+date = "  %a. %d %b. %Y  "  
+date-alt = ""
+; time
+time = "  %H:%M:%S"
+time-alt = "  %H:%M %p"
+; date time
+label = "%date%%time%"
+format = <label>
+label-font = 2
+format-background = ${colors.bg-applet}
+format-foreground = ${colors.fg-applet}
+
+;=======================================================================;
+;                               RIGHT MODULES                           ;
+;=======================================================================;
+
+[module/wlan]
+type = internal/network
+interface = wlp1s0
+interval = 3.0
+; wlan connected
+label-connected = " %essid%   "
+format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-font = 3
+format-connected-background = ${colors.bg-applet}
+format-connected-foreground = ${colors.fg-applet}
+
+[module/eth]
+type = internal/network
+interface = enp6s0
+interval = 3.0
+; eth connected
+label-connected = " %downspeed%   "
+format-connected = <label-connected>
+format-connected-prefix = " "
+format-connected-prefix-font = 3
+format-connected-background = ${colors.bg-applet}
+format-connected-foreground = ${colors.fg-applet}
+;eth disconnected
+label-disconnected = " none    "
+format-disconnected = <label-disconnected>
+format-disconnected-prefix = " "
+format-disconnected-prefix-font = 3
+format-disconnected-background = ${colors.bg-applet}
+format-disconnected-foreground = ${colors.fg-applet}
+
+[module/memory]
+type = internal/memory
+interval = 2
+; RAM
+format-prefix = " "
+format-prefix-font = 3
+label = " %mb_used%   "
+format-background = ${colors.bg-applet}
+format-foreground = ${colors.fg-applet}
+format-padding = 0
+
+[module/alsa]
+type = internal/alsa
+; volume
+label-volume = "%percentage%%  "
+format-volume = <ramp-volume> <label-volume>
+format-volume-background = ${colors.bg-applet}
+format-volume-foreground = ${colors.fg-applet}
+; muted
+format-muted-prefix = "ﱝ "
+format-muted-prefix-font = 3
+label-muted = " muted  "
+format-muted-background = ${colors.bg-applet}
+format-muted-foreground = ${colors.fg-applet}
+; ramp
+ramp-volume-0 = " "
+ramp-volume-1 = " "
+ramp-volume-2 = " "
+ramp-volume-font = 3
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 99
+; charging
+label-charging = "  %percentage%%   "
+format-charging = <label-charging>
+format-charging-background = ${colors.bg-applet}
+format-charging-foreground = ${colors.fg-applet}
+format-charging-padding = 3
+; discharging
+label-discharging = "  %percentage%%   "
+format-discharging = <label-discharging>
+format-discharging-background = ${colors.bg-applet}
+format-discharging-foreground = ${colors.fg-applet}
+format-discharging-padding = 3
+; full
+label-full = "   100%   "
+format-full = <label-full>
+format-full-background = ${colors.bg-applet}
+format-full-foreground = ${colors.fg-applet}
+format-full-padding = 3
+
+[module/powermenu]
+type = custom/text
+content = "  "
+content-font = 3
+click-left = sh -c ~/.config/rofi/powermenu/powermenu.sh
+
+[module/powermenu2]
+type = custom/menu
+label-active-font = 1
+format-spacing = 0
+padding-left = 0
+padding-right = 0
+format-background = ${colors.bg-applet}
+format-foreground = ${colors.fg-applet}
+; power button
+label-open = "  "
+label-open-font = 3
+; cancel button
+label-close = "  cancel"
+label-close-foreground = ${colors.primary}
+label-close-background = ${colors.bg-powermenu}
+label-close-font = 1
+; separators
+label-separator = "   "
+label-separator-foreground = ${colors.fg-powermenu}
+label-separator-background = ${colors.bg-powermenu}
+; logout
+menu-0-0 = "logout "
+menu-0-0-foreground = ${colors.fg-powermenu}
+menu-0-0-background = ${colors.bg-powermenu}
+menu-0-0-exec = bspc quit
+; suspend
+menu-0-1 = "  "
+menu-0-1-foreground = ${colors.fg-powermenu}
+menu-0-1-background = ${colors.bg-powermenu}
+menu-0-1-font = 3
+menu-0-1-exec = systemctl suspend && slimlock
+; reboot
+menu-0-2 = " "
+menu-0-2-foreground = ${colors.fg-powermenu}
+menu-0-2-background = ${colors.bg-powermenu}
+menu-0-2-font = 3
+menu-0-2-exec = systemctl reboot
+; poweroff
+menu-0-3 = "  "
+menu-0-3-foreground = ${colors.primary}
+menu-0-3-background = ${colors.bg-powermenu}
+menu-0-3-font = 3
+menu-0-3-exec = systemctl poweroff
+
+;=======================================================================
+;                               MISCS
+;=======================================================================
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+;pseudo-transparency = false
+
+[global/wm]
+margin-top = 0
+margin-bottom = 0
+
+; vim:ft=dosini
